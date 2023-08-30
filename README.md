@@ -5,5 +5,6 @@
     I´m skilled using Tableu and Power BI.
 
 # [Project 1: ](https://public.tableau.com/app/profile/ioshua/viz/shared/42QYWQ7RP)
-Tableau develop a map of Convinience stores called OXXO in the City of Cancun
+Tableau - Create a map of Conviniences stores called OXXO in the City of Cancun using the data from the National Statistical Directory of Economic Units (DENUE).
+
 ![image](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/dd30d9f4-4a92-4f1e-be9e-b712ea26acfb)

@@ -14,3 +14,6 @@ Tableau - Create a map of Conviniences stores called OXXO in the City of Cancun 
 PowerBI - A Power BI map was created to highlight domestic violence in Mexico City. The map shows that Iztapalapa has the highest rate of domestic violence in the city. [Open Data Portal](https://datos.cdmx.gob.mx/dataset/victimas-en-carpetas-de-investigacion-fgj)
 
 ![Dashboard](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/9c389267-c03b-4f02-86c4-4cd8fd9bb4de)
+
+Click here to download the PowerBI file ->
+[Crimenes en la CDMX 2023.zip](https://github.com/IoshuaCastillejos/IoshuaCastillejos/files/12517261/Crimenes.en.la.CDMX.2023.zip)

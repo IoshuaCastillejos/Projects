@@ -20,6 +20,10 @@ Click here to download the PowerBI file ->
 
 # Project 3:
 
-Python - In this project I generated a dashboard to visualize sales data from a store. 
-  -  The project involved retrieving data from the database, cleaning and preparing the data, and generating visualizations to represent the data. The dashboard provides insights into sales trends, customer behavior, and product performance.
+Python - For this project I created a dashboard to visualize the sales for the financial year 2023 from a store.The project involved retrieving data from the client web application, whitout accessing directly to the database.In order to achieve this:
+Step 1: [Python Script ]()
+  -  I developed a Python script to automate the task of extracting data from web pages.
+  -  Cleaning and preparing the data.
+Step 2: PowerBi Dashboard
+  - Generating visualizations to represent the data. The dashboard provides insights into sales trends, customer behavior, and product performance.
  

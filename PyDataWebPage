@@ -1,0 +1,29 @@
+#Using Python 3.7.3
+#Selenium 4.11
+
+#Import Libraries
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+
+#User credentials
+username= "Name"
+password = "Password"
+
+#Select the web driver to use
+driver = webdriver.Chrome()
+
+#Navigating to the WebPage/ WebApp
+driver.get("https://web/page")
+time.sleep(2)
+
+#Entering user name
+mBox = driver.find_element(By.XPATH,value='//*[@id="username"]')
+mBox.send_keys(username) #Pone Usuario
+
+#Entering password
+mBox = driver.find_element(By.XPATH,value='//*[@id="password"]')
+mBox.send_keys(password) #Pone Password
+
+#Click on the log in page.
+driver.find_element(By.XPATH,value= '//*[@id="frmlogin"]/div[5]/div/input').click()

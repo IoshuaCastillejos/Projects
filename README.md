@@ -17,3 +17,9 @@ PowerBI - A Power BI map was created to highlight domestic violence in Mexico Ci
 
 Click here to download the PowerBI file ->
 [Crimenes en la CDMX 2023.zip](https://github.com/IoshuaCastillejos/IoshuaCastillejos/files/12517261/Crimenes.en.la.CDMX.2023.zip)
+
+# Project 3:
+
+Python - In this project I generated a dashboard to visualize sales data from a store. 
+  -  The project involved retrieving data from the database, cleaning and preparing the data, and generating visualizations to represent the data. The dashboard provides insights into sales trends, customer behavior, and product performance.
+ 

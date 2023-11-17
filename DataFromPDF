@@ -1,0 +1,20 @@
+#install tabula-py
+import pandas as pd
+import tabula
+
+pdf = "sample.pdf"
+dfs = tabula.read_pdf("sample.pdf",stream=True,pages="all")
+
+df=dfs[0]
+df.columns = ["Venta", "Fecha", "Paciente", "Vendedor", "Articulo", "Importe", "Pago", "FormaDePago"]
+
+# Corrige los valores NaN
+for i in range(len(df)):
+  for col in ["Venta", "Fecha", "Paciente", "Vendedor"]:
+    if pd.isna(df.loc[i, col]):
+      try:
+        df.loc[i, col] = df.loc[df["Venta"] == df.loc[i, "Venta"], col].iloc[-1]
+      except IndexError:
+        pass
+
+df

@@ -1,4 +1,4 @@
-#install tabula-py
+#!pip install tabula-py
 import pandas as pd
 import tabula
 

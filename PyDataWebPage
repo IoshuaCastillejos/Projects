@@ -4,26 +4,61 @@
 #Import Libraries
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 import time
 
 #User credentials
 username= "Name"
 password = "Password"
 
-#Select the web driver to use
+#Definir la pagina a entrar
 driver = webdriver.Chrome()
-
-#Navigating to the WebPage/ WebApp
-driver.get("https://web/page")
+driver.get("https://sistema.opticarabe.com.mx/secure/login")
 time.sleep(2)
 
-#Entering user name
+#Inserta usuario
 mBox = driver.find_element(By.XPATH,value='//*[@id="username"]')
-mBox.send_keys(username) #Pone Usuario
+mBox.send_keys(username)
 
-#Entering password
+#inserta contraseña
 mBox = driver.find_element(By.XPATH,value='//*[@id="password"]')
-mBox.send_keys(password) #Pone Password
+mBox.send_keys(password)
 
-#Click on the log in page.
+# #Entra a la pagina
 driver.find_element(By.XPATH,value= '//*[@id="frmlogin"]/div[5]/div/input').click()
+
+#------------------------------EMPIEZA CICLO FOR-------------------
+# Insert the name into the field
+
+mBox = driver.find_element(By.XPATH, value='//*[@id="inputPaciente"]')
+mBox.send_keys("Aban Chimal")
+
+#Click on buscar
+driver.find_element(By.XPATH,value= '/html/body/div/div[1]/section[2]/div[2]/div/div/div[1]/div[2]/form/div[2]/input').click()
+
+#Click on vermas
+driver.find_element(By.XPATH,value= '/html/body/div/div[1]/section[2]/div[2]/div/div/div[3]/table/tbody[2]/tr/td[5]/a').click()
+
+#Select the object for the dropdown list
+genero_dropdown = driver.find_element(By.XPATH, value='//*[@id="genero"]')
+edad_input = driver.find_element(By.XPATH, value='//*[@id="edadPaciente"]')
+info_dropdown = driver.find_element(By.XPATH, value='//*[@id="medioComunicacion"]')
+
+# Get the selected option
+genero_select = Select(genero_dropdown)
+genero_option = genero_select.first_selected_option
+
+edad = edad_input.get_attribute('Value')
+
+info_select = Select(info_dropdown)
+info_option = info_select.first_selected_option
+
+# Get the selected option's text
+genero_option = genero_option.text
+info_option = info_option.text
+
+# Print the selected option's text
+print("Genero: ",genero_option,", Edad: ",edad,", Como se entero: ", info_option)
+
+
+#------------------------------TERMINA CICLO FOR--------------------

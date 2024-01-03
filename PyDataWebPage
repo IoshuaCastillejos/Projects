@@ -5,11 +5,25 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
 import time
 
-#User credentials
-username= "Name"
-password = "Password"
+# Leer la lista de nombres desde el archivo CSV
+df = pd.read_csv("output_prueba.csv")
+
+# Remover duplicados de NotaVenta
+articulos_df = df.drop_duplicates(subset=['NotaVenta'])
+
+# Crear listas para almacenar resultados
+resultados_generales = []
+resultados_tabla = []
+
+#ingresa usuario y contraseña
+username= "Erick"
+password = "constantinespawn"
+file = open('Clientes')
 
 #Definir la pagina a entrar
 driver = webdriver.Chrome()
@@ -26,39 +40,87 @@ mBox.send_keys(password)
 
 # #Entra a la pagina
 driver.find_element(By.XPATH,value= '//*[@id="frmlogin"]/div[5]/div/input').click()
+time.sleep(3)
 
-#------------------------------EMPIEZA CICLO FOR-------------------
+#------------------------------INCIA CICLO FOR----------------------------------------------
 # Insert the name into the field
+for index, row in articulos_df.iterrows():
+    try:
+        NotaVenta = row['NotaVenta']
+        # Insertar el nombre en el campo Nota
+        mBox = driver.find_element(By.XPATH, value='// *[ @ id = "inputNota"]')
+        mBox.send_keys(NotaVenta)
+        time.sleep(3)
 
-mBox = driver.find_element(By.XPATH, value='//*[@id="inputPaciente"]')
-mBox.send_keys("Aban Chimal")
+        # Click on buscar NotaVenta
+        driver.find_element(By.XPATH,value= '/html/body/ul[1]').click()
+        time.sleep(3)
+ # ------------------------------INCIA SEGUNDO CICLO FOR-------------------------------------------------------------
+        # Aquí se realiza la extracción de datos de la tabla
+        WebDriverWait(driver, 10).until(
+           EC.presence_of_element_located((By.XPATH, '/html/body/div/div[1]/section[2]/table[3]')))
+        tabla = driver.find_element(By.XPATH, '/html/body/div/div[1]/section[2]/table[3]')
+        filas_tabla = tabla.find_elements(By.TAG_NAME, "tr")
 
-#Click on buscar
-driver.find_element(By.XPATH,value= '/html/body/div/div[1]/section[2]/div[2]/div/div/div[1]/div[2]/form/div[2]/input').click()
+        for fila in filas_tabla[1:]:  # Comienza desde el segundo elemento (índice 1)
+           celdas = fila.find_elements(By.TAG_NAME, "td")
+           if len(celdas) >= 3:  # Verificar que la fila tenga al menos tres celdas
+              cantidad = celdas[0].text
+              descripcion = celdas[1].text
+              importe = celdas[2].text
+              resultados_tabla.append(
+                 {"NotaVenta": NotaVenta, "Cantidad": cantidad, "Descripcion": descripcion, "Importe": importe})
+        print(f"NotaVenta:{NotaVenta}, Cantidad:{cantidad}, Descripcion:{descripcion}, Importe:{importe}")
+        # ------------------------------TERMINA SEGUNDO CICLO FOR-------------------------------------------------------------
+        # Click on Regresar
+        driver.find_element(By.XPATH, value='/html/body/div/div[1]/section[2]/div[3]/a').click()
+        time.sleep(2)
 
-#Click on vermas
-driver.find_element(By.XPATH,value= '/html/body/div/div[1]/section[2]/div[2]/div/div/div[3]/table/tbody[2]/tr/td[5]/a').click()
+        #Select the object for the dropdown list
+        Apellidos_input = driver.find_element(By.XPATH, value='//*[@id="apellidos"]')
+        Nombre_input = driver.find_element(By.XPATH, value='//*[@id="nombre"]')
+        genero_dropdown = driver.find_element(By.XPATH, value='//*[@id="genero"]')
+        edad_input = driver.find_element(By.XPATH, value='//*[@id="edadPaciente"]')
+        info_dropdown = driver.find_element(By.XPATH, value='//*[@id="medioComunicacion"]')
 
-#Select the object for the dropdown list
-genero_dropdown = driver.find_element(By.XPATH, value='//*[@id="genero"]')
-edad_input = driver.find_element(By.XPATH, value='//*[@id="edadPaciente"]')
-info_dropdown = driver.find_element(By.XPATH, value='//*[@id="medioComunicacion"]')
+        # Get the selected option
+        Nombre = Apellidos_input.get_attribute('Value') +' ' + Nombre_input.get_attribute('Value')
+        edad = edad_input.get_attribute('Value')
 
-# Get the selected option
-genero_select = Select(genero_dropdown)
-genero_option = genero_select.first_selected_option
+        genero_select = Select(genero_dropdown)
+        genero_option = genero_select.first_selected_option
 
-edad = edad_input.get_attribute('Value')
+        info_select = Select(info_dropdown)
+        info_option = info_select.first_selected_option
 
-info_select = Select(info_dropdown)
-info_option = info_select.first_selected_option
+        # Get the selected option's text
+        genero_option = genero_option.text
+        info_option = info_option.text
 
-# Get the selected option's text
-genero_option = genero_option.text
-info_option = info_option.text
+        # Print the selected option's text
+        print("NotaVenta:",NotaVenta,"Genero:",genero_option, ", Edad:",edad, ",Como se entero:", info_option)
+        driver.find_element(By.XPATH,value= '/html/body/div[1]/div[1]/section[2]/div[2]/div[1]/a').click()
 
-# Print the selected option's text
-print("Genero: ",genero_option,", Edad: ",edad,", Como se entero: ", info_option)
+        # Añadir resultados generales
+        resultados_generales.append({
+        "NotaVenta": NotaVenta,
+        "Genero": genero_option,
+        "Edad": edad,
+        "ComoSeEntero": info_option
+        })
 
+    except Exception as e:
+        print(f"No se encontraron resultados para {NotaVenta}.")
+        mBox = driver.find_element(By.XPATH, value='// *[ @ id = "inputNota"]')
+        mBox.clear()
+#------------------------------TERMINA CICLO FOR-------------------------------------------
+# Convertir las listas de resultados en DataFrames
+df_generales = pd.DataFrame(resultados_generales)
+df_tabla = pd.DataFrame(resultados_tabla)
 
-#------------------------------TERMINA CICLO FOR--------------------
+# Guardar los DataFrames en archivos CSV
+df_generales.to_csv("resultados_generales.csv", index=False)
+df_tabla.to_csv("resultados_tabla.csv", index=False)
+
+# Cerrar el navegador WebDriver
+driver.quit()

@@ -1,20 +1,35 @@
-#!pip install tabula-py
 import pandas as pd
-import tabula
+import pdfplumber
 
-pdf = "sample.pdf"
-dfs = tabula.read_pdf("sample.pdf",stream=True,pages="all")
+# Definir el número de página
+page_number = 6
+# Lista para almacenar DataFrames de cada página
+all_dfs = []
 
-df=dfs[0]
-df.columns = ["Venta", "Fecha", "Paciente", "Vendedor", "Articulo", "Importe", "Pago", "FormaDePago"]
+# Leer el PDF y almacenar DataFrames en la lista
+pdf_path = "todoenero.pdf"
+with pdfplumber.open(pdf_path) as pdf:
+    for page_number in range(len(pdf.pages)):
+        # Obtener la página actual en el ciclo
+        page = pdf.pages[page_number]
 
-# Corrige los valores NaN
-for i in range(len(df)):
-  for col in ["Venta", "Fecha", "Paciente", "Vendedor"]:
-    if pd.isna(df.loc[i, col]):
-      try:
-        df.loc[i, col] = df.loc[df["Venta"] == df.loc[i, "Venta"], col].iloc[-1]
-      except IndexError:
-        pass
+        # Extraer la tabla de la página
+        table = page.extract_table()
 
-df
+        # Crear un DataFrame de pandas con los datos de la tabla
+        df = pd.DataFrame(table[1:], columns=table[0])
+
+        # Agregar el DataFrame a la lista
+        all_dfs.append(df)
+
+# Combinar todos los DataFrames en uno solo
+final_df = pd.concat(all_dfs, ignore_index=True)
+final_df.columns = ["NotaVenta", "FechaDeVenta", "Paciente", "Vendedor", "Articulo", "Importe", "Pago", "FormaDePago","FormaDePago2"]
+final_df.replace('\n', ' ', regex=True, inplace=True)
+final_df = final_df.drop(columns=["Paciente","Articulo", "Importe", "Pago", "FormaDePago", "FormaDePago2"])
+final_df = final_df.drop_duplicates("NotaVenta")
+final_df = final_df.dropna(how='any')
+
+final_df
+# Imprimir el DataFrame final
+final_df.to_csv("resultado_2023.csv", index=False, escapechar=",")

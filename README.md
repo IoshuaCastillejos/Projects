@@ -20,7 +20,11 @@ Click here to download the PowerBI file ->
 
 # Project 3:
 
-Python - For this project I created a dashboard to visualize the sales for the financial year 2023 from a store.The project involved retrieving data from the client web application, whitout accessing directly to the database.In order to achieve this:
+Python - For this project I created a dashboard to visualize the sales for the financial year 2023 from a store.The project involved retrieving data from the client web application, whitout accessing directly to the database.In order to achieve this I followed the below steps:
+
+## Step 1: [Extract Data from a PDF]()
+  -  The initial data was provided in a PDF report and I developed a Python script to extract, transform and clean the data.
+
 ## Step 1: [Python Script ](https://github.com/IoshuaCastillejos/IoshuaCastillejos/blob/main/PyDataWebPage)
   -  I developed a Python script to automate the task of extracting data from web pages.
   -  Cleaning and preparing the data.

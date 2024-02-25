@@ -10,53 +10,55 @@ from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
 
-# Leer la lista de nombres desde el archivo CSV
-df = pd.read_csv("output_prueba.csv")
+#Read the list extracted from the PDF
+df = pd.read_csv("output_prueba.csv", delimiter=',', quotechar='"')
 
-# Remover duplicados de NotaVenta
+#Remove Duplicates
 articulos_df = df.drop_duplicates(subset=['NotaVenta'])
-
+print(articulos_df)
 # Crear listas para almacenar resultados
 resultados_generales = []
 resultados_tabla = []
 
-#ingresa usuario y contraseña
-username= "Erick"
-password = "constantinespawn"
+#User & Password
+username= "User"
+password = "password"
 file = open('Clientes')
 
-#Definir la pagina a entrar
+#Web page
 driver = webdriver.Chrome()
-driver.get("https://sistema.opticarabe.com.mx/secure/login")
+driver.get("https://webpage")
 time.sleep(2)
 
-#Inserta usuario
+#Insert User 
 mBox = driver.find_element(By.XPATH,value='//*[@id="username"]')
 mBox.send_keys(username)
 
-#inserta contraseña
+#Insert Password
 mBox = driver.find_element(By.XPATH,value='//*[@id="password"]')
 mBox.send_keys(password)
 
-# #Entra a la pagina
+#Login
 driver.find_element(By.XPATH,value= '//*[@id="frmlogin"]/div[5]/div/input').click()
 time.sleep(3)
 
-#------------------------------INCIA CICLO FOR----------------------------------------------
-# Insert the name into the field
+#------------------------------Start the FOR----------------------------------------------
+# Insert Sale Note cycle 
 for index, row in articulos_df.iterrows():
     try:
         NotaVenta = row['NotaVenta']
-        # Insertar el nombre en el campo Nota
+        FechaDeVenta = row['FechaDeVenta']
+
+        #Insert the Sale Note
         mBox = driver.find_element(By.XPATH, value='// *[ @ id = "inputNota"]')
         mBox.send_keys(NotaVenta)
         time.sleep(3)
 
-        # Click on buscar NotaVenta
+        #Click on Search
         driver.find_element(By.XPATH,value= '/html/body/ul[1]').click()
         time.sleep(3)
  # ------------------------------INCIA SEGUNDO CICLO FOR-------------------------------------------------------------
-        # Aquí se realiza la extracción de datos de la tabla
+        #Extract Sales Data
         WebDriverWait(driver, 10).until(
            EC.presence_of_element_located((By.XPATH, '/html/body/div/div[1]/section[2]/table[3]')))
         tabla = driver.find_element(By.XPATH, '/html/body/div/div[1]/section[2]/table[3]')
@@ -71,12 +73,29 @@ for index, row in articulos_df.iterrows():
               resultados_tabla.append(
                  {"NotaVenta": NotaVenta, "Cantidad": cantidad, "Descripcion": descripcion, "Importe": importe})
         print(f"NotaVenta:{NotaVenta}, Cantidad:{cantidad}, Descripcion:{descripcion}, Importe:{importe}")
-        # ------------------------------TERMINA SEGUNDO CICLO FOR-------------------------------------------------------------
-        # Click on Regresar
+        # ------------------------------Start the second cycle -------------------------------------------------------------
+
+         #Select the Date Table
+        tabla = driver.find_element(By.XPATH, '/html/body/div/div[1]/section[2]/table[1]')
+
+        #Get the first Row
+        primera_fila = tabla.find_element(By.TAG_NAME, 'tr')
+
+        #Get the Date Value
+        celda_fecha = primera_fila.find_element(By.TAG_NAME, 'td')
+
+        #Get the Date from the text 
+        fecha_venta = celda_fecha.text
+        fecha_venta = fecha_venta.split(':')[-1].strip()
+
+        #Print the DATE(esto es opcional, puedes quitarlo si no es necesario imprimir)
+        print(f'Fecha de Venta: {fecha_venta}')
+
+        #Go to the Next Table
         driver.find_element(By.XPATH, value='/html/body/div/div[1]/section[2]/div[3]/a').click()
         time.sleep(2)
 
-        #Select the object for the dropdown list
+        #Select Values from the dropdown list
         Apellidos_input = driver.find_element(By.XPATH, value='//*[@id="apellidos"]')
         Nombre_input = driver.find_element(By.XPATH, value='//*[@id="nombre"]')
         genero_dropdown = driver.find_element(By.XPATH, value='//*[@id="genero"]')
@@ -98,15 +117,16 @@ for index, row in articulos_df.iterrows():
         info_option = info_option.text
 
         # Print the selected option's text
-        print("NotaVenta:",NotaVenta,"Genero:",genero_option, ", Edad:",edad, ",Como se entero:", info_option)
+        print("NotaVenta:",NotaVenta," ,FechaVenta:",FechaDeVenta," ,Genero:",genero_option, " ,Edad:",edad, " ,Como se entero:",info_option)
         driver.find_element(By.XPATH,value= '/html/body/div[1]/div[1]/section[2]/div[2]/div[1]/a').click()
 
-        # Añadir resultados generales
+        #Add to General Results
         resultados_generales.append({
         "NotaVenta": NotaVenta,
+        "FechaDeVenta": FechaDeVenta,
         "Genero": genero_option,
         "Edad": edad,
-        "ComoSeEntero": info_option
+        "ComoSeEntero": info_option,
         })
 
     except Exception as e:
@@ -114,13 +134,13 @@ for index, row in articulos_df.iterrows():
         mBox = driver.find_element(By.XPATH, value='// *[ @ id = "inputNota"]')
         mBox.clear()
 #------------------------------TERMINA CICLO FOR-------------------------------------------
-# Convertir las listas de resultados en DataFrames
+# Convert to DataFrame
 df_generales = pd.DataFrame(resultados_generales)
 df_tabla = pd.DataFrame(resultados_tabla)
 
-# Guardar los DataFrames en archivos CSV
+# Save as CSV
 df_generales.to_csv("resultados_generales.csv", index=False)
 df_tabla.to_csv("resultados_tabla.csv", index=False)
 
-# Cerrar el navegador WebDriver
+# Close webdriver
 driver.quit()

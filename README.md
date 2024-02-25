@@ -10,11 +10,11 @@ Python - For this project I created a dashboard to visualize the sales for the f
 ## Step 1: [Extract Data from a PDF](https://github.com/IoshuaCastillejos/IoshuaCastillejos/blob/main/DataFromPDF)
   -  The initial data was provided in a PDF report and I developed a Python script to extract, transform and clean the data.
 
-## Step 1: [Python Script ](https://github.com/IoshuaCastillejos/IoshuaCastillejos/blob/main/PyDataWebPage)
+## Step 2: [Python Script ](https://github.com/IoshuaCastillejos/IoshuaCastillejos/blob/main/PyDataWebPage)
   -  Once the data was extracted we need more data from the users and the sales note but without accessing the Database the only way it was using the Webapp from the client.
   -  I developed a Python script to automate the task of extracting data from web app.
   -  Cleaning and preparing the data.
-## Step 2: [Tableau Dashboard](https://public.tableau.com/views/Rabe2023/Dashboard3?:language=es-ES&:sid=&:display_count=n&:origin=viz_share_link)
+## Step 3: [Tableau Dashboard](https://public.tableau.com/views/Rabe2023/Dashboard3?:language=es-ES&:sid=&:display_count=n&:origin=viz_share_link)
   - Generating visualizations to represent the data. The dashboard provides insights into sales trends, customer behavior, and product performance.
 ![Reporte Venta (3)](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/7db5e798-2e45-4568-a183-3f5d573d0bb6)
 

@@ -26,4 +26,6 @@ Python - For this project I created a dashboard to visualize the sales for the f
   -  Cleaning and preparing the data.
 ## Step 2: [Tableau Dashboard](https://public.tableau.com/views/Rabe2023/Dashboard3?:language=es-ES&:sid=&:display_count=n&:origin=viz_share_link)
   - Generating visualizations to represent the data. The dashboard provides insights into sales trends, customer behavior, and product performance.
- 
+![Reporte Venta (3)](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/7db5e798-2e45-4568-a183-3f5d573d0bb6)
+
+

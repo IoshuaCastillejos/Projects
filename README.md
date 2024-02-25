@@ -1,4 +1,4 @@
-# HI, I'm Ioshua Castillejos 
+# HI, I'm Ioshua German Castillejos 
 ## I’m interested in 
   - Using Data Analysis to improve the application behavior, and improve performance.
   - Interpreting data with the creation of great data visualizations that communicate insights.

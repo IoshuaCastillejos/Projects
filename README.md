@@ -27,7 +27,7 @@ PowerBI - A Power BI map was created to highlight domestic violence in Mexico Ci
 Click here to download the PowerBI file ->
 [Crimenes en la CDMX 2023.zip](https://github.com/IoshuaCastillejos/IoshuaCastillejos/files/12517261/Crimenes.en.la.CDMX.2023.zip)
 
-# [Project 3: ](https://public.tableau.com/app/profile/ioshua/viz/shared/42QYWQ7RP)
+# Project 3: 
 Tableau - Create a map of Conviniences stores called OXXO in the City of Cancun using the data from the [National Statistical Directory of Economic Units (DENUE)](https://www.inegi.org.mx/app/mapa/denue/default.aspx).
 
 ![image](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/dd30d9f4-4a92-4f1e-be9e-b712ea26acfb)

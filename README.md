@@ -32,3 +32,13 @@ Tableau - Create a map of Conviniences stores called OXXO in the City of Cancun 
 
 ![image](https://github.com/IoshuaCastillejos/IoshuaCastillejos/assets/127347943/dd30d9f4-4a92-4f1e-be9e-b712ea26acfb)
 
+#Project 4: [Excel to CSV](https://github.com/IoshuaCastillejos/IoshuaCastillejos/blob/main/DataFromPDF)
+Excel to CSV Processing with Python 2.7- 
+The Challenge:
+* Process multiple Excel files with varying sheet structures
+* Consolidate data by type while maintaining data integrity
+* Work within Python 2.7 constraints (no f-strings, limited encoding options)
+* Create a reusable, well-documented solution
+
+
+

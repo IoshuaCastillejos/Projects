@@ -36,7 +36,7 @@ class ExcelToCSVProccess:
         'losses': ['wdw losses', 'dlr losses']
         }
         
-        # Map only desired file names
+        # Map only desired output files
         self.sheet_to_process = {
         'losses'
         }
